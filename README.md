@@ -14,3 +14,4 @@ Day 9: Smoke Basin.  Find low points and basin sizes.
 Day 10: Syntax scoring.  Find and score corrupted or incomplete syntaxes.  
 Day 11: Dumbo Octopus.  Flashing octopuses, similar to game of Life.  
 Day 12: Pasage Pathing.  Find your way through a series of caves.  
+Day 13: Tranparent Origami.  Fold a transparent sheet of paper to get access code.
