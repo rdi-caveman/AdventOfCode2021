@@ -17,4 +17,5 @@ Day 12: **Passage Pathing**  Find your way through a series of caves.
 Day 13: **Transparent Origami**  Fold a transparent sheet of paper to get access code.  
 Day 14: **Extended Polymerization**  Exponential growth of polymers.  Find the most and least common elements.  
 Day 15: **Chiton**  Find the least risky path through the cave using Dijkstra's algorithm.   
-Day 16: **Packet Decoder**  Decode packets within packets from a stream of bits defined in hexadecimal.
+Day 16: **Packet Decoder**  Decode packets within packets from a stream of bits defined in hexadecimal.  
+Day 17: **Trick Shot**  Launch probes into a trench. How high can you go? How many ways?
