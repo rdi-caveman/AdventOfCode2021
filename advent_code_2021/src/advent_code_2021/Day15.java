@@ -10,7 +10,7 @@ public class Day15 {
 	private static final String DAY15_INPUT_TXT = "src/resources/day15_input.txt";
 	
 	public static void main(String[] args) {
-		int[][] inputMap = initialize();
+		int[][] inputMap = FileUtility.readIntArray(DAY15_INPUT_TXT);
 		System.out.println("Day 15 part 1 " + leastRisk(inputMap));
 		int[][] expandedMap = expandMap(inputMap, 5);
 		System.out.println("Day 15 part 2 " + leastRisk(expandedMap));
@@ -89,25 +89,6 @@ public class Day15 {
 			//System.out.println(cells);
 		}
 		return risk[length - 1][width - 1];
-	}
-
-	private static int[][] initialize() {
-		int[][] inputMap = null;
-		String input[];
-		try {
-			input = (new String(Files.readAllBytes(Paths.get(DAY15_INPUT_TXT)))).split("\r?\n");
-			int length = input.length;
-			int width = input[0].length();
-			inputMap = new int[length][width];
-			for (int row = 0; row < length; row++) {
-				for (int col = 0; col < width; col++) {
-					inputMap[row][col] = input[row].charAt(col) - '0';
-				}
-			}
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-		}
-		return inputMap;
 	}
 
 	private static boolean isInsideGrid(int row, int col, int length, int width) {

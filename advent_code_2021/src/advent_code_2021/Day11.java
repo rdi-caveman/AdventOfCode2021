@@ -79,22 +79,7 @@ public class Day11 {
 	
 	public static void initialize() {
 		flashes = 0;
-		try (BufferedReader br = Files.newBufferedReader(Paths.get(DAY11_INPUT_TXT))) {
-			for (int row=0; row<GRID_SIZE; row++) {
-				String line = br.readLine();
-				for (int col=0; col<GRID_SIZE; col++) {
-					octopus[row][col] = line.charAt(col) - '0';
-				}
-			}
-			
-			String line;
-			while ((line = br.readLine()) != null) {
-				
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+		octopus = FileUtility.readIntArray(DAY11_INPUT_TXT, GRID_SIZE, GRID_SIZE);
 	}
 
 	public static void displayOctopuses(int step) {

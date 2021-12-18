@@ -35,68 +35,54 @@ public class Day8 {
 	private static final String DAY8_INPUT_TXT = "src/resources/day8_input.txt";
 	private static List<String[]> inputs = new ArrayList<>();
 	private static List<String[]> outputs = new ArrayList<>();
-	
-	
+
 	public static void main(String[] args) {
 		initialize();
-		part1();	
+		part1();
 		part2();
-			
-			
+
 	}
 
 	private static void part1() {
-		long count = outputs.stream()
-			.flatMap(a -> Arrays.stream(a))
-			.mapToInt(s -> s.length())
-			.filter(i -> i == 2 || i == 3 || i == 4 || i == 7)
-			.count();
+		long count = outputs.stream().flatMap(a -> Arrays.stream(a)).mapToInt(s -> s.length())
+				.filter(i -> i == 2 || i == 3 || i == 4 || i == 7).count();
 		System.out.println("Day 8 part 1 " + count);
 	}
-	
-	private static void part2() { 
-		int sum = IntStream.range(0, inputs.size())
-				.map(i -> decode(inputs.get(i), outputs.get(i)))
-				.sum();
+
+	private static void part2() {
+		int sum = IntStream.range(0, inputs.size()).map(i -> decode(inputs.get(i), outputs.get(i))).sum();
 		System.out.println("Day 8 part 2 " + sum);
-	}	
+	}
 
 	private static int decode(String[] input, String[] output) {
 		Map<String, String> segmentMap = getSegmentMapping(input);
 		int value = 0;
-		for (int i=0; i< output.length; i++) {
-			String segments = Arrays.stream(output[i].split(""))
-				.map(s -> segmentMap.get(s))
-				.sorted()
-				.collect(Collectors.joining(""));
+		for (int i = 0; i < output.length; i++) {
+			String segments = Arrays.stream(output[i].split("")).map(s -> segmentMap.get(s)).sorted()
+					.collect(Collectors.joining(""));
 			value = value * 10 + LED.getBySegments(segments).value();
 		}
 		return value;
 	}
 
 	/*
-	 * 	frequency counts of segments can identify segments b, e, f
-	 *  a:8 b:6 c:8 d:7 e:4 f:9 g:7
-	 *  segment c is in one (length 2) (not mapped already)
-	 *  segment a is in seven (length 3) (not mapped already)
-	 *  segment d is in four (length 4)(not mapped already)
-	 *  segment g is in eight (length 7) (not mapped already)
+	 * frequency counts of segments can identify segments b, e, f a:8 b:6 c:8 d:7
+	 * e:4 f:9 g:7 segment c is in one (length 2) (not mapped already) segment a is
+	 * in seven (length 3) (not mapped already) segment d is in four (length 4)(not
+	 * mapped already) segment g is in eight (length 7) (not mapped already)
 	 */
-	
+
 	private static Map<String, String> getSegmentMapping(String[] input) {
-		Map<String, Integer> frequencyMap = new HashMap<>(); 
-		Map<String, String> segmentMapping = new HashMap<>(); 
-		Arrays.stream(input)
-			.flatMap(s -> Arrays.stream(s.split("")))
-			.forEach(s -> frequencyMap.put(s, frequencyMap.getOrDefault(s,0)+1));
+		Map<String, Integer> frequencyMap = new HashMap<>();
+		Map<String, String> segmentMapping = new HashMap<>();
+		Arrays.stream(input).flatMap(s -> Arrays.stream(s.split("")))
+				.forEach(s -> frequencyMap.put(s, frequencyMap.getOrDefault(s, 0) + 1));
 		for (String s : frequencyMap.keySet()) {
 			if (frequencyMap.get(s).equals(6)) {
 				segmentMapping.put(s, "b");
-			}
-			else if (frequencyMap.get(s).equals(4)) {
+			} else if (frequencyMap.get(s).equals(4)) {
 				segmentMapping.put(s, "e");
-			}
-			else if (frequencyMap.get(s).equals(9)) {
+			} else if (frequencyMap.get(s).equals(9)) {
 				segmentMapping.put(s, "f");
 			}
 		}
@@ -109,69 +95,54 @@ public class Day8 {
 
 	private static void findUnmappedSegment(String[] input, Map<String, String> segmentMapping,
 			Map<String, Integer> frequencyMap, int length, String toSegment) {
-		Optional<String> number = Arrays.stream(input)
-				.filter(s -> s.length() == length )
+		Optional<String> number = Arrays.stream(input).filter(s -> s.length() == length).findFirst();
+		Optional<String> segment = Arrays.stream(number.get().split("")).filter(s -> !segmentMapping.containsKey(s))
 				.findFirst();
-		Optional<String> segment = Arrays.stream(number.get().split(""))
-			.filter(s -> !segmentMapping.containsKey(s))
-			.findFirst();
 		segmentMapping.put(segment.get(), toSegment);
 	}
 
 	private static void initialize() {
-
-		try (Stream<String> stream = Files.lines(Paths.get(DAY8_INPUT_TXT))) {
-			inputs.clear();
-			outputs.clear();
-			stream.forEach(s ->{
-				String[] input = s.split(" \\| ")[0].split(" ");
-				String[] output = s.split(" \\| ")[1].split(" ");
-				inputs.add(input);
-				outputs.add(output);
-			});
-		} catch (IOException e) {
-		  System.out.println(e.getMessage());
-		}
+		inputs.clear();
+		outputs.clear();
+		FileUtility.readListOfString(DAY8_INPUT_TXT).stream().forEach(s -> {
+			String[] input = s.split(" \\| ")[0].split(" ");
+			String[] output = s.split(" \\| ")[1].split(" ");
+			inputs.add(input);
+			outputs.add(output);
+		});
 	}
 
 	public enum LED {
-		ZERO("abcefg", 0),
-		ONE("cf", 1),
-		TWO("acdeg", 2),
-		THREE("acdfg", 3),
-		FOUR("bcdf", 4),
-		FIVE("abdfg", 5),
-		SIX("abdefg", 6),
-		SEVEN("acf", 7),
-		EIGHT("abcdefg", 8),
-		NINE("abcdfg", 9);
-		
-		private static Map<String,LED> map = new HashMap<>();
-		
+		ZERO("abcefg", 0), ONE("cf", 1), TWO("acdeg", 2), THREE("acdfg", 3), FOUR("bcdf", 4), FIVE("abdfg", 5),
+		SIX("abdefg", 6), SEVEN("acf", 7), EIGHT("abcdefg", 8), NINE("abcdfg", 9);
+
+		private static Map<String, LED> map = new HashMap<>();
+
 		private final String segments;
 		private final int value;
+
 		private LED(String segments, int value) {
 			this.segments = segments;
 			this.value = value;
 		}
-		
+
 		static {
 			for (LED led : LED.values()) {
 				map.put(led.segments, led);
 			}
 		}
-			
+
 		public String segments() {
 			return segments;
 		}
-		
+
 		public int value() {
 			return value;
 		}
-		
+
 		public static LED getBySegments(String s) {
 			return map.get(s);
 		}
 	}
-	
+
 }

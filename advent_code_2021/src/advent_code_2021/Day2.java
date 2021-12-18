@@ -31,8 +31,8 @@ public class Day2 {
 	}
 
 	private static void initialize(List<SubCommand> commands) {
-		try (Stream<String> stream = Files.lines(Paths.get(DAY2_INPUT_TXT))) {
-			stream.forEach(s -> {
+		FileUtility.readListOfString(DAY2_INPUT_TXT).stream()
+			.forEach(s -> {
 				subCmdMatcher.reset(s);
 				if (subCmdMatcher.matches()) {
 					commands.add(new SubCommand(subCmdMatcher.group(1), Long.parseLong(subCmdMatcher.group(2))));
@@ -41,9 +41,6 @@ public class Day2 {
 					System.out.println("unparseable message " + s);
 				}
 			});
-		} catch (IOException e) {
-		  System.out.println(e.getMessage());
 		}
-	}
 
 }

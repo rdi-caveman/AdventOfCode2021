@@ -12,12 +12,11 @@ import java.util.stream.Collectors;
 
 public class Day10 {
 	private static final String DAY10_INPUT_TXT = "src/resources/day10_input.txt";
-	static String[] input;
 	static String openChars = "([{<";
 	static String closeChars = ")]}>";
 	
 	public static void main(String[] args) {
-		initialize();
+		String[] input = FileUtility.readEntireFile(DAY10_INPUT_TXT).split("\\s+");
 		// part 1
 		long syntaxErrorScore = Arrays.stream(input)
 			.map(s -> parse(s))
@@ -39,14 +38,6 @@ public class Day10 {
 
 	}
 	
-	private static void initialize() {
-		try {
-			input = (new String(Files.readAllBytes(Paths.get(DAY10_INPUT_TXT)))).split("\\s+");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 	private static long invalidSyntaxScore(Character errorChar) {
 		if (errorChar.charValue() == ')') return 3;

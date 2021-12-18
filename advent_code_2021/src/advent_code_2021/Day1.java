@@ -14,13 +14,8 @@ public class Day1 {
 	private static final String DAY1_INPUT_TXT = "src/resources/day1_input.txt";
 
 	public static void main(String args[]) {
-		List<Integer> ints = new ArrayList<>();
+		List<Integer> ints = FileUtility.readListOfInteger(DAY1_INPUT_TXT);
 		int increases = 0;
-		try (Stream<String> stream = Files.lines(Paths.get(DAY1_INPUT_TXT))) {
-			ints = stream.map(s -> Integer.parseInt(s)).collect(Collectors.toList());
-		} catch (IOException e) {
-		  System.out.println(e.getMessage());
-		}
 		for (int i=1; i<ints.size(); i++ ) {
 			if (ints.get(i-1) < ints.get(i)) {
 				increases++;

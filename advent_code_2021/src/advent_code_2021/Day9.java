@@ -123,17 +123,11 @@ public class Day9 {
 	}
 	
 	private static void initialize() {
-		try {
-			heightMap = (new String(Files.readAllBytes(Paths.get(DAY9_INPUT_TXT)))).split("\\s+");
+			heightMap = FileUtility.readEntireFile(DAY9_INPUT_TXT).split("\\s+");
 			mapHeight = heightMap.length;
 			mapWidth = heightMap[0].length();
 			heightCount = new int[mapHeight][mapWidth];
 			basinMap = new int[mapHeight][mapWidth];
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	private static void printBasinMap(int x, int y, int z) {

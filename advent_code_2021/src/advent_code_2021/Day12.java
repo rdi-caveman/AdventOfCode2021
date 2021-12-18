@@ -54,8 +54,8 @@ public class Day12 {
 	}
 	
 	public static void initialize() {
-		try (Stream<String> stream = Files.lines(Paths.get(DAY12_INPUT_TXT))) {
-			stream.map(s -> s.split("-"))
+		FileUtility.readListOfString(DAY12_INPUT_TXT).stream()
+			.map(s -> s.split("-"))
 			.forEach(a -> {
 				if (!caves.containsKey(a[0])) {
 					caves.put(a[0], new Cave(a[0]));
@@ -66,8 +66,6 @@ public class Day12 {
 				caves.get(a[0]).addNeighbor(a[1]);
 				caves.get(a[1]).addNeighbor(a[0]);
 			});
-		} catch (IOException e) {
-		  System.out.println(e.getMessage());
-		}
+
 	}
 }
