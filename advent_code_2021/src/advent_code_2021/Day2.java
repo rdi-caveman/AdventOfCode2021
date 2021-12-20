@@ -1,14 +1,9 @@
 package advent_code_2021;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Day2 {
 	private final static String DAY2_INPUT_TXT = "src/resources/day2_input.txt";
