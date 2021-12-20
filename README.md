@@ -21,3 +21,4 @@ Day 16: **Packet Decoder**  Decode packets within packets from a stream of bits 
 Day 17: **Trick Shot**  Launch probes into a trench. How high can you go? How many ways?  
 Day 18: **Snailfish**  Do the Snailfish homework. But what to use, trees, lists, treelists?  
 Day 19: **Beacon Scanner** Piece together a map of all beacons by indentify overlaps. Location, location location.  
+Day 20: **Trench Map**  Image enhancement of infinite sized picture.  Like the game of Life.

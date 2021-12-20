@@ -58,7 +58,7 @@ public class FileUtility {
 	}
 
 	public static int[][] readIntArray(String filename, int numRow, int numCol) {
-		int[][] returnArray = null;
+		int[][] returnArray = new int[numRow][numCol];
 		try (BufferedReader br = Files.newBufferedReader(Paths.get(filename))) {
 			for (int row = 0; row < numRow; row++) {
 				String line = br.readLine();

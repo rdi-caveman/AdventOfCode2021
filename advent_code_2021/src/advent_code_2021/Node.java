@@ -5,7 +5,7 @@ public class Node {
 	Node leftChild;
 	Node rightChild;
 	Integer value = null;
-	Integer depth = 0;
+	Integer depth = 0;  
 	
 	public Node() {
 		
