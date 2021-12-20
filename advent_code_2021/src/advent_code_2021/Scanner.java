@@ -90,26 +90,32 @@ public class Scanner {
 	}
 	
 	public static int[] rotateBeacon(int[] pos, int[] rot) {
-		for (int i=0; i<rot[0]; i++) {
-			pos = rotateX(pos);
-		}
-		for (int i=0; i<rot[1]; i++) {
-			pos = rotateY(pos);
-		}
-		for (int i=0; i<rot[2]; i++) {
-			pos = rotateX(pos);
-		}
+		pos = rotateX(pos, rot[0]);
+		pos = rotateY(pos, rot[1]);
+		pos = rotateX(pos, rot[2]);
 		return pos;
 	}
 
-	private static int[] rotateX(int[] pos) {
-		return new int[] {-pos[1], pos[0], pos[2]};
-	}
 
-	private static int[] rotateY(int[] pos) {
-		return new int[] {pos[0], -pos[2], pos[1]};
+	private static int[] rotateX(int[] pos, int num) {
+		switch(num % 4) {
+		case 0: return pos;
+		case 1: return new int[] {pos[1], -pos[0], pos[2]};
+		case 2: return new int[] {-pos[0], -pos[1], pos[2]};
+		case 3: return new int[] {-pos[1], pos[0], pos[2]};
+		}
+		return pos;
 	}
 	
+	private static int[] rotateY(int[] pos, int num) {
+		switch(num % 4) {
+		case 0: return pos;
+		case 1: return new int[] {pos[0], pos[2], -pos[1]};
+		case 2: return new int[] {pos[0], -pos[1], -pos[2]};
+		case 3: return new int[] {pos[0], -pos[2], pos[1]};
+		}
+		return pos;
+	}
 	public static int[] add(int[] a, int[] b) {
 		int[] c = new int[3];
 		for (int i=0; i<3; i++) c[i]=a[i]+b[i];
