@@ -8,7 +8,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
+/*
+ * Scanner has a location (relative to scanner 0) 
+ * and a rotation (relative to scanner 0)
+ */
 public class Scanner {
 	int id;
 	int[] location = new int[] {0,0,0};
@@ -19,6 +22,9 @@ public class Scanner {
 		this.id = id;
 	}
 
+	/*
+	 * Parse scanner id and beacon locations
+	 */
 	public static Scanner parse(String r) {
 		String[] input = r.split("\\r?\\n");
 		int id = Integer.parseInt(input[0].split("\\s")[2]);
@@ -30,6 +36,12 @@ public class Scanner {
 		return scanner;
 	}
 	
+	/*
+	 *  Compare beacons in all orientations
+	 *  returns true if beacons overlap
+	 *  also returns relative location and rotation compared to scanner 0
+	 */
+	
 	public Triple<Boolean, int[], int[]> compareBeacons(Scanner s) {
 		Triple<Boolean, int[], int[]> result = null;
 		int[] orientation;
@@ -37,7 +49,7 @@ public class Scanner {
 		for (int i=0; i<4; i++) {
 			for (int j=0; j<4; j++) {
 				for (int k=0; k<4; k++) {
-					if (j==0 && k>0) continue;
+					if (j==0 && k>0) continue;  // if we haven't rotated in y dimension, this is same plane as inital x rotation
 					orientation = new int[] {i,j,k};
 					result = compareBeacons(s, orientation);
 					if (result.first) {
@@ -49,9 +61,14 @@ public class Scanner {
 		return result;
 	}
 	
-	public Triple<Boolean, int[], int[]> compareBeacons(Scanner s, int[] orientation) {
+	/*
+	 * Compare beacons for overlap in a single orientation
+	 * returns true if beacons overlap
+	 * also returns relative location and roation compared to scanner 0
+	 */
+		public Triple<Boolean, int[], int[]> compareBeacons(Scanner s, int[] orientation) {
 		int[] distance = new int[3];
-		Map<String, Integer> overlap = new HashMap<>();
+		Map<String, Integer> overlap = new HashMap<>(); //TODO: move int[] to a class so we don't convert to/from string
 		for(int[] a : this.beacons) {
 			a = rotateBeacon(a, this.orientation);
 			a = add(a, this.location);
@@ -68,8 +85,7 @@ public class Scanner {
 			.map(e -> e.getKey());
 		if (dist.isPresent()) {
 			String[] d = ((String)dist.get()).split(",");
-			int[] newLocation = new int[] {Integer.parseInt(d[0]), Integer.parseInt(d[1]), Integer.parseInt(d[2])};
-			//newLocation = subtract(newLocation, location);
+			int[] newLocation = new int[] {Integer.parseInt(d[0]), Integer.parseInt(d[1]), Integer.parseInt(d[2])};  //ugly
 			return new Triple(true, newLocation, orientation);
 		}
 		else {
@@ -89,13 +105,18 @@ public class Scanner {
 			.toString();
 	}
 	
+	/*
+	 * all possible rotations can be achieved through rotations around two axes
+	 * rotate around x
+	 * rotate around y
+	 * rotate around x
+	 */
 	public static int[] rotateBeacon(int[] pos, int[] rot) {
 		pos = rotateX(pos, rot[0]);
 		pos = rotateY(pos, rot[1]);
 		pos = rotateX(pos, rot[2]);
 		return pos;
 	}
-
 
 	private static int[] rotateX(int[] pos, int num) {
 		switch(num % 4) {
@@ -116,6 +137,7 @@ public class Scanner {
 		}
 		return pos;
 	}
+
 	public static int[] add(int[] a, int[] b) {
 		int[] c = new int[3];
 		for (int i=0; i<3; i++) c[i]=a[i]+b[i];

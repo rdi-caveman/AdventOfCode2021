@@ -29,24 +29,28 @@ public class Day19 {
 		while (!unlocated.isEmpty()) { 
 			s = unlocated.removeFirst();
 			boolean found = false;
+			// compare an unlocated scanner to every located scanner
 			for(Scanner reference : located) {
 				Triple<Boolean, int[], int[]> result = reference.compareBeacons(s);
 				if (result.first) {
 					found = true;
 					s.location = result.second;
 					s.orientation = result.third;
-					located.add(s);
+					located.add(s);	// add to the list of located scanners and move on
 					System.out.println("located " + s);
-					break;
+					break;  
 				}
 			}
 			if (!found) {
+				// couldn't locate it yet.  Throw at the end of the list to try later.
 				unlocated.addLast(s);
 			}
 		}
 		
 		// compile complete list of beacons
-		Map<String, int[]> allBeacons = new HashMap<>();
+		// could use a set here, but thought I might need to do something with locations
+		// other than count them in part 2.
+		Map<String, int[]> allBeacons = new HashMap<>();  
 		scanners.stream()
 			.forEach(sc ->{
 				sc.beacons.stream()
@@ -57,7 +61,8 @@ public class Day19 {
 		System.out.println(allBeacons.keySet());
 		System.out.println("Day 19 part 1 " + allBeacons.size());
 		
-		// find max manhattan distance BETWEEN SCANNERS ( NOT BEACONS )
+		// find max manhattan distance 
+		// BETWEEN SCANNERS ( NOT BEACONS )  ARRGGGHH!!!
 		int maxManhattanDistance = 0;
 		for (int i=0; i<scanners.size()-1; i++) {
 			for (int j=i+1; j<scanners.size(); j++) {
