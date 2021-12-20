@@ -1,10 +1,15 @@
 package advent_code_2021;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -65,5 +70,17 @@ public class FileUtility {
 			e.printStackTrace();
 		}
 		return returnArray;
+	}
+	
+	public static List<String> readRecords(String filename, String delimiter) {
+		List<String> records = new ArrayList<>();
+		try (Scanner sc = new Scanner(new File(filename)).useDelimiter(delimiter)) {
+			while (sc.hasNext()) {
+				records.add(sc.next());
+			}			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return records;
 	}
 }

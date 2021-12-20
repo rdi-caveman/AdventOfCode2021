@@ -18,5 +18,6 @@ Day 13: **Transparent Origami**  Fold a transparent sheet of paper to get access
 Day 14: **Extended Polymerization**  Exponential growth of polymers.  Find the most and least common elements.  
 Day 15: **Chiton**  Find the least risky path through the cave using Dijkstra's algorithm.   
 Day 16: **Packet Decoder**  Decode packets within packets from a stream of bits defined in hexadecimal.  
-Day 17: **Trick Shot**  Launch probes into a trench. How high can you go? How many ways?
-Day 18: **Snailfish**  Do the Snailfish homework. But what to use, trees, lists, treelists?
+Day 17: **Trick Shot**  Launch probes into a trench. How high can you go? How many ways?  
+Day 18: **Snailfish**  Do the Snailfish homework. But what to use, trees, lists, treelists?  
+Day 19: **Beacon Scanner** Piece together a map of all beacons by indentify overlaps. Location, location location.  
