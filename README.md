@@ -22,4 +22,5 @@ Day 17: **Trick Shot**  Launch probes into a trench. How high can you go? How ma
 Day 18: **Snailfish**  Do the Snailfish homework. But what to use, trees, lists, treelists?  
 Day 19: **Beacon Scanner** Piece together a map of all beacons by indentify overlaps. Location, location location.  
 Day 20: **Trench Map**  Image enhancement of infinite sized picture.  Like the game of Life.  
-Day 21: **Dirac Dice** God does not play dice, but when he does he plays Dirac Dice
+Day 21: **Dirac Dice** God does not play dice, but when he does he plays Dirac Dice  
+Day 22: **Reactor Reboot**  Interesecting cubes are turned on or off.
