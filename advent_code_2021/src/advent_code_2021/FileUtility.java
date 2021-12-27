@@ -72,6 +72,20 @@ public class FileUtility {
 		return returnArray;
 	}
 	
+	public static char[][] readCharArray(String filename) {
+		char[][] inputMap = null;
+		String[] input = FileUtility.readEntireFile(filename).split("\r?\n");
+		int length = input.length;
+		int width = input[0].length();
+		inputMap = new char[length][width];
+		for (int row = 0; row < length; row++) {
+			for (int col = 0; col < width; col++) {
+				inputMap[row][col] = input[row].charAt(col);
+			}
+		}
+		return inputMap;
+	}
+	
 	public static List<String> readRecords(String filename, String delimiter) {
 		List<String> records = new ArrayList<>();
 		try (Scanner sc = new Scanner(new File(filename)).useDelimiter(delimiter)) {
