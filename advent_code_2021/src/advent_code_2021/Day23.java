@@ -12,19 +12,39 @@ public class Day23 {
 	private static final String DAY23_GOAL_TXT = "src/resources/day23_goal.txt";
 	private static final String DAY23_PART2_INPUT_TXT = "src/resources/day23_part2_input.txt";
 	private static final String DAY23_PART2_GOAL_TXT = "src/resources/day23_part2_goal.txt";
-	private static String INITIAL_STATE = readGame(DAY23_INPUT_TXT);
-	private static String GOAL_STATE = readGame(DAY23_GOAL_TXT);
-	
+
 	private static HashMap<Integer, GameSpace> gameSpaces = new HashMap<>(); 
+	private static String initialState;
+	private static String goalState;
+	private static int roomDepth;
 	
 	public static void main(String[] args) {
+		// initialize
 		initializeBurrow();
+		
+		// part 1
 		Map<String, Integer> bestScore = new HashMap<>();
-		bestScore.put(INITIAL_STATE,0);
+		initialState = readGame(DAY23_INPUT_TXT);
+		goalState = readGame(DAY23_GOAL_TXT);
+		roomDepth = 2;
+		bestScore.put(initialState,0);
 		Stack<Triple<String, List<Pair<Integer,Integer>>, Integer>> moves = new Stack<>();
-		moves.push(new Triple(INITIAL_STATE, validMoves(INITIAL_STATE), 0));
+		moves.push(new Triple(initialState, validMoves(initialState), 0));
 		solve(bestScore, moves);
-		System.out.println("Day 23 part 1 " + bestScore.get(GOAL_STATE));
+		System.out.println("Day 23 part 1 " + bestScore.get(goalState));
+
+		// part 2
+		bestScore = new HashMap<>();
+		initialState = readGame(DAY23_PART2_INPUT_TXT);
+		goalState = readGame(DAY23_PART2_GOAL_TXT);
+		roomDepth = 4;
+		bestScore.put(initialState,0);
+		moves = new Stack<>();
+		moves.push(new Triple(initialState, validMoves(initialState), 0));
+		solve(bestScore, moves);
+		System.out.println("Day 23 part 2 " + bestScore.get(goalState));
+
+	
 	}
 
 	private static void solve(Map<String, Integer> bestScore,
@@ -80,7 +100,7 @@ public class Day23 {
 		gameSpaces.put(503,new GameSpace(5,3,23,false, true, false, 'A'));
 		gameSpaces.put(505,new GameSpace(5,5,24,false, true, false, 'B'));
 		gameSpaces.put(507,new GameSpace(5,7,25,false, true, false, 'C'));
-		gameSpaces.put(609,new GameSpace(5,9,26,false, true, false, 'D'));
+		gameSpaces.put(509,new GameSpace(5,9,26,false, true, false, 'D'));
 
 	}
 
@@ -156,22 +176,26 @@ public class Day23 {
 	}
 
 	/*
-	 * return lower room if both rooms are empty
-	 * or upper room if lower room is occupied by arthropod
-	 * in target room.
+	 * return lowest empty room 
+	 * if all rooms are occupied by proper arthropod
+	 * or empty
 	 */
 	private static List<Integer> getOpenRooms(String gameState) {
 		List<Integer> openRooms = new ArrayList<>();
 		for (int room = 203; room<=209; room += 2) {
-			if (getGameState(gameState,room) == '.') {
-				// upper room is empty
-				if (getGameState(gameState,room+100) == '.') {
-					openRooms.add(room+100); // both rooms open
+			int emptyRoom = 0;
+			boolean correctColor = true;
+			for (int depth = 0; depth < roomDepth; depth++) {
+				if (getGameState(gameState, room + depth*100) == '.') {
+					emptyRoom = room + depth*100;
 				}
-				else if (getGameState(gameState,room+100) == gameSpaces.get(room+100).homeFor) {
-					// lower room is occupied by correct type of arthropod
-					openRooms.add(room); // only upper room open
+				else if (getGameState(gameState, room + depth*100) != gameSpaces.get(room + depth*100).homeFor) {
+					correctColor = false;
 				}
+				
+			}
+			if (correctColor && emptyRoom > 0) {
+				openRooms.add(emptyRoom);
 			}
 		}
 		return openRooms;
@@ -183,18 +207,21 @@ public class Day23 {
 	 */
 	private static List<Integer> arthropodsInRooms(String gameState) {
 		List<Integer> arthropods = new ArrayList<>();
-		for (int room = 203; room<=209; room += 2) {
-			if (getGameState(gameState,room) == '.') {
-				// upper room empty check lower room
-				if (getGameState(gameState,room+100) != '.' && getGameState(gameState,room+100) != gameSpaces.get(room+100).homeFor) {
-					arthropods.add(room+100);
+		for (int room = 103; room<=109; room += 2) {
+			int topArthropod = 0;
+			boolean correctColor = true;
+			for (int depth = roomDepth; depth>0; depth--) {
+				if (getGameState(gameState,room + depth*100) != '.') {
+					topArthropod = room + depth*100;
+					if (getGameState(gameState,room+ depth*100) != gameSpaces.get(room+100).homeFor) {
+						correctColor = false;					
+					}
 				}
 			}
-			// check upper room
-			else if (getGameState(gameState,room) != gameSpaces.get(room).homeFor || getGameState(gameState, room+100) != gameSpaces.get(room).homeFor ) {
-				arthropods.add(room);
+			if (!correctColor && topArthropod !=0) {
+				arthropods.add(topArthropod);
 			}
-		}
+		}	
 		return arthropods;		
 	}
 	
