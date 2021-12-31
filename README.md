@@ -23,4 +23,7 @@ Day 18: **Snailfish**  Do the Snailfish homework. But what to use, trees, lists,
 Day 19: **Beacon Scanner** Piece together a map of all beacons by indentify overlaps. Location, location location.  
 Day 20: **Trench Map**  Image enhancement of infinite sized picture.  Like the game of Life.  
 Day 21: **Dirac Dice** God does not play dice, but when he does he plays Dirac Dice  
-Day 22: **Reactor Reboot**  Interesecting cubes are turned on or off.
+Day 22: **Reactor Reboot**  Interesecting cubes are turned on or off.  
+Day 23: **Amphipod**  Play tower of Hanoi with Amphipods.
+Day 24: **Arithmetic Logic Unit**  Find the largest and smallest valid model numbers.
+Day 25: **Sea Cucumber**  Eastbound and Southbound Sea Cucumbers collide.
